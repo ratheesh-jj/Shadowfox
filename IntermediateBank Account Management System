@@ -1,0 +1,71 @@
+class BankAccount {
+    private double balance;
+    private StringBuilder transactionHistory;
+
+    public BankAccount() {
+        balance = 0.0;
+        transactionHistory = new StringBuilder();
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            transactionHistory.append("Deposited: ").append(amount).append("\n");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            transactionHistory.append("Withdrew: ").append(amount).append("\n");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getTransactionHistory() {
+        return transactionHistory.toString();
+    }
+}
+
+// JUnit Test Class (requires JUnit 5)
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class BankAccountWithTest {
+
+    @Test
+    public void testDeposit() {
+        BankAccount account = new BankAccount();
+        account.deposit(500);
+        assertEquals(500, account.getBalance(), 0.001);
+    }
+
+    @Test
+    public void testWithdraw() {
+        BankAccount account = new BankAccount();
+        account.deposit(1000);
+        account.withdraw(300);
+        assertEquals(700, account.getBalance(), 0.001);
+    }
+
+    @Test
+    public void testWithdrawInsufficientFunds() {
+        BankAccount account = new BankAccount();
+        account.deposit(200);
+        account.withdraw(300);
+        assertEquals(200, account.getBalance(), 0.001);
+    }
+
+    @Test
+    public void testTransactionHistory() {
+        BankAccount account = new BankAccount();
+        account.deposit(100);
+        account.withdraw(50);
+        String history = account.getTransactionHistory();
+        assertTrue(history.contains("Deposited: 100"));
+        assertTrue(history.contains("Withdrew: 50"));
+    }
+}
