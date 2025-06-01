@@ -1,0 +1,80 @@
+import java.util.Scanner;
+
+public class EnhancedCalculator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n--- Enhanced Calculator ---");
+            System.out.println("1. Add\n2. Subtract\n3. Multiply\n4. Divide\n5. Square Root\n6. Exponent\n7. Temperature Conversion\n8. Exit");
+            System.out.print("Choose an option: ");
+            int choice = sc.nextInt();
+
+            double a, b, result;
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    result = a + b;
+                    System.out.println("Result: " + result);
+                    break;
+                case 2:
+                    System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    result = a - b;
+                    System.out.println("Result: " + result);
+                    break;
+                case 3:
+                    System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    result = a * b;
+                    System.out.println("Result: " + result);
+                    break;
+                case 4:
+                    System.out.print("Enter two numbers: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    if (b != 0) {
+                        result = a / b;
+                        System.out.println("Result: " + result);
+                    } else {
+                        System.out.println("Error: Division by zero.");
+                    }
+                    break;
+                case 5:
+                    System.out.print("Enter a number: ");
+                    a = sc.nextDouble();
+                    System.out.println("Square root: " + Math.sqrt(a));
+                    break;
+                case 6:
+                    System.out.print("Enter base and exponent: ");
+                    a = sc.nextDouble();
+                    b = sc.nextDouble();
+                    System.out.println("Result: " + Math.pow(a, b));
+                    break;
+                case 7:
+                    System.out.println("1. Celsius to Fahrenheit\n2. Fahrenheit to Celsius");
+                    int tempChoice = sc.nextInt();
+                    System.out.print("Enter temperature: ");
+                    a = sc.nextDouble();
+                    if (tempChoice == 1) {
+                        System.out.println("Result: " + (a * 9/5 + 32) + " °F");
+                    } else {
+                        System.out.println("Result: " + ((a - 32) * 5/9) + " °C");
+                    }
+                    break;
+                case 8:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+        sc.close();
+    }
+}
