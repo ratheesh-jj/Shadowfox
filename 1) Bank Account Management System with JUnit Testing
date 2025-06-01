@@ -1,0 +1,32 @@
+public class BankAccount {
+    private double balance;
+    private StringBuilder transactionHistory;
+
+    public BankAccount() {
+        balance = 0.0;
+        transactionHistory = new StringBuilder();
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            transactionHistory.append("Deposited: ").append(amount).append("\n");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            transactionHistory.append("Withdrew: ").append(amount).append("\n");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getTransactionHistory() {
+        return transactionHistory.toString();
+    }
+}
+v
