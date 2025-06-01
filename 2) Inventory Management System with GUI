@@ -1,0 +1,89 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class InventoryItem {
+    private String name;
+    private int quantity;
+
+    public InventoryItem(String name, int quantity) {
+        this.name = name;
+        this.quantity = quantity;
+    }
+
+    public String getName() { return name; }
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public String toString() {
+        return name + " - Qty: " + quantity;
+    }
+}
+
+public class InventoryGUI extends JFrame {
+    private DefaultListModel<InventoryItem> model = new DefaultListModel<>();
+    private JList<InventoryItem> itemList = new JList<>(model);
+    private JTextField nameField = new JTextField(15);
+    private JTextField quantityField = new JTextField(5);
+
+    public InventoryGUI() {
+        setTitle("Inventory Manager");
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.add(new JLabel("Name:"));
+        inputPanel.add(nameField);
+        inputPanel.add(new JLabel("Quantity:"));
+        inputPanel.add(quantityField);
+
+        JButton addButton = new JButton("Add");
+        JButton updateButton = new JButton("Update");
+        JButton deleteButton = new JButton("Delete");
+
+        inputPanel.add(addButton);
+        inputPanel.add(updateButton);
+        inputPanel.add(deleteButton);
+
+        add(inputPanel, BorderLayout.NORTH);
+        add(new JScrollPane(itemList), BorderLayout.CENTER);
+
+        addButton.addActionListener(e -> {
+            String name = nameField.getText();
+            try {
+                int qty = Integer.parseInt(quantityField.getText());
+                model.addElement(new InventoryItem(name, qty));
+                nameField.setText("");
+                quantityField.setText("");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid quantity");
+            }
+        });
+
+        updateButton.addActionListener(e -> {
+            int index = itemList.getSelectedIndex();
+            if (index >= 0) {
+                try {
+                    int qty = Integer.parseInt(quantityField.getText());
+                    InventoryItem item = model.get(index);
+                    item.setQuantity(qty);
+                    itemList.repaint();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Invalid quantity");
+                }
+            }
+        });
+
+        deleteButton.addActionListener(e -> {
+            int index = itemList.getSelectedIndex();
+            if (index >= 0) {
+                model.remove(index);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new InventoryGUI().setVisible(true));
+    }
+}
